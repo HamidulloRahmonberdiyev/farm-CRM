@@ -1,0 +1,7 @@
+{
+    "date_picker": {
+        "months": ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"],
+        "weekdays": ["Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba", "Yakshanba"],
+        "weekdays_short": ["Du", "Se", "Ch", "Pa", "Ju", "Sh", "Ya"]
+    }
+}
