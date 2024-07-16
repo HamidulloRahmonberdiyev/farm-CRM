@@ -13,6 +13,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\IconPosition;
 use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
@@ -171,18 +172,22 @@ class OrderResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Qarz')
+                    ->iconPosition(IconPosition::After)
                     ->color(function ($record) {
                         $payments = $record->prices->sum('price');
                         $amount = $record->total_price - $payments;
-                        if ($amount > 0) {
-                            return 'danger';
-                        }
+                        if ($amount > 0) return 'danger';
                         return 'success';
+                    })
+                    ->icon(function ($record) {
+                        $payments = $record->prices->sum('price');
+                        $amount = $record->total_price - $payments;
+                        return $amount <= 0 ? 'heroicon-o-check-circle' : '';
                     })
                     ->state(function ($record) {
                         $payments = $record->prices->sum('price');
                         $amount = $record->total_price - $payments;
-                        if ($amount <= 0) return "To'landi!";
+                        if ($amount <= 0) return 'To\'landi';
                         return formatPrice($amount);
                     })
                     ->action(
