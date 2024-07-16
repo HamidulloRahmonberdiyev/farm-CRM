@@ -47,9 +47,17 @@ class CustomerResource extends Resource
                         Forms\Components\TextInput::make('first_name')
                             ->label((__('models/customer.prop.first_name')))
                             ->required()
+                            ->extraInputAttributes([
+                                'x-data' => '',
+                                'x-on:input' => '$el.value = $el.value.charAt(0).toUpperCase() + $el.value.slice(1)',
+                            ])
                             ->maxLength(255),
                         Forms\Components\TextInput::make('last_name')
                             ->label((__('models/customer.prop.last_name')))
+                            ->extraInputAttributes([
+                                'x-data' => '',
+                                'x-on:input' => '$el.value = $el.value.charAt(0).toUpperCase() + $el.value.slice(1)',
+                            ])
                             ->maxLength(255),
                         Forms\Components\Select::make('address_id')
                             ->label((__('models/customer.prop.address')))

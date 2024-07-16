@@ -31,6 +31,10 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->extraInputAttributes([
+                        'x-data' => '',
+                        'x-on:input' => '$el.value = $el.value.charAt(0).toUpperCase() + $el.value.slice(1)',
+                    ])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()

@@ -89,6 +89,10 @@ class OrderResource extends Resource
                         Forms\Components\Textarea::make('note')
                             ->label(__('models/order.prop.note'))
                             ->rows(4)
+                            ->extraInputAttributes([
+                                'x-data' => '',
+                                'x-on:input' => '$el.value = $el.value.charAt(0).toUpperCase() + $el.value.slice(1)',
+                            ])
                             ->columnSpanFull(),
                     ])->columnSpan(2),
                 Forms\Components\Section::make(__('models/order.prop.settings'))
@@ -148,10 +152,18 @@ class OrderResource extends Resource
                     ->copyable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('doors_count')
-                    ->label(__('models/order.prop.doors_count'))
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('windows_count')
-                    ->label(__('models/order.prop.windows_count'))
+                    ->label('Eshik va Derazalar')
+                    ->wrap()
+                    ->state(function ($record) {
+                        $output = '';
+                        if ($record->doors_count > 0) {
+                            $output .= $record->doors_count . ' ' . 'ta eshik' . ', ';
+                        }
+                        if ($record->windows_count > 0) {
+                            $output .= $record->windows_count . ' ' . 'ta deraza';
+                        }
+                        return rtrim($output, ', ');
+                    })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_price')
                     ->label(__('models/order.prop.total_price'))
@@ -323,6 +335,13 @@ class OrderResource extends Resource
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(6)
             ->actions([
+                Tables\Actions\Action::make('pdf')
+                    ->label('PDF')
+                    ->color('info')
+                    ->button()
+                    ->outlined()
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->url(fn (Order $record) => route('pdf', $record)),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

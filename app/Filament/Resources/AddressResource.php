@@ -36,10 +36,18 @@ class AddressResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->label(__('models/address.prop.name'))
                     ->required()
+                    ->extraInputAttributes([
+                        'x-data' => '',
+                        'x-on:input' => '$el.value = $el.value.charAt(0).toUpperCase() + $el.value.slice(1)',
+                    ])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('second_name')
                     ->label(__('models/address.prop.second_name'))
                     ->nullable()
+                    ->extraInputAttributes([
+                        'x-data' => '',
+                        'x-on:input' => '$el.value = $el.value.charAt(0).toUpperCase() + $el.value.slice(1)',
+                    ])
                     ->maxLength(255),
             ]);
     }
